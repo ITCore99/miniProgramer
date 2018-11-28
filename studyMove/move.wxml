@@ -1,0 +1,8 @@
+<view class='container'>
+  <scroll-view scroll-y>
+      <view wx:for="{{data}}" wx:for-item="item" wx:key="{{index}}" class='order-item'>
+        <view class='content' bindtouchstart='touchS' bindtouchmove="touchM" bindtouchend='touchE' data-index="{{index}}" style="{{item.txtStyle}}">{{item.content}}</view>
+        <view class="remove" data-index="{{index}}" catchtap='HandlerDel'>删除</view>
+      </view>
+  </scroll-view>
+</view>
