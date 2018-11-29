@@ -7,7 +7,12 @@ Page({
     delBtnWidth:180, //定义删除按钮的宽度
     data: [{ content: "1、为了让用户的体验效果有一个很大的提升，在删除 单行信息 的 时候，我们逐渐从点击删除到向左 滑动实现删除 ", right: 0 }, { content: "2", right: 0 }, { content: "3",                right: 0 }, { content: "4", right: 0 }, { content: "5", right: 0 }, {                  content: "6",     right: 0 }, { content: "7", right: 0 }, { content: "8",              right: 0 }, { content: "9", right: 0 }, { content: "10", right: 0 }],
     windowHeight:0,//定义窗口的高度
-    startX:""//记录手指开始的位置
+    startX:"",//记录手指开始的位置
+    buttonText:"发送验证码",
+    btnFlag:false,
+    images:[],//测试图片上传的功能使用
+    selectContent:"选择门店自提",
+    selectFlag:false,
   
   },
 
@@ -73,7 +78,6 @@ Page({
    */
   touchS:function(e)
   {
-    console.log("开始触摸",e);
     if(e.touches.length==1)
     {
       this.setData({
@@ -163,5 +167,102 @@ Page({
      this.setData({
        data: list
      })
+  },
+  /**
+   * 练习支付
+   */
+  halderClickPay:function()
+  {
+    console.log("开始支付");
+    let timeStr=+new Date()+"";
+    console.log(timeStr);
+    wx.requestPayment({
+      timeStamp: timeStr,
+      nonceStr: 'dhasdkasdp[csdfc',
+      package: 'orTKu4i2BXUrsTluzlWxiWrvXsdo',
+      signType: '6be8b15211b0fd72a83c15aaaeb8b8f3',
+      paySign: 'MD5',
+      success:function(res){
+
+      },
+      fail:function(res){
+         console.log("支付失败",res);
+      },
+      complete:function(res)
+      {
+        console.log("支付完成",res);
+      }
+    })
+  },
+  /**
+   * 练习验证码的按钮效果
+   */
+  handleSend:function(e)
+  {
+    let that=this;
+    let seconds=10;
+    let timer=setInterval(function(){
+      let newSecond = --seconds;
+      console.log(newSecond);
+      that.setData({
+        buttonText: newSecond + "s后重发",
+         btnFlag:true
+       });
+      if (newSecond < 0) {
+        clearInterval(timer);
+        that.setData({
+          btnFlag: false,
+          buttonText: "发送验证码",
+        });
+      }
+    },1000);
+  },
+  /**
+   * 练习图片的上传预览
+   */
+  chooseImage:function()
+  {
+    let _this = this;
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success:res=>{
+        console.log(res);
+        _this.setData({
+          images: this.data.images.concat(res.tempFilePaths).slice(0,3),
+        });
+        console.log("我的上传", this.data.images);
+      }
+    })
+  },
+  handleImagePreview:function(e)
+  {
+    let index=e.currentTarget.dataset.index;
+    console.log(index);
+    wx.previewImage({ //图片的预览功能
+      current:this.data.images[index], //预览的当前图片
+      urls: this.data.images//要预览的所有图片
+    })
+  },
+  /**图片的上传需要开发者服务器的后台进行支持 */
+
+  /**
+   * 练习手动的实现微信下拉框效果
+   *
+   */
+  handeSpread:function(e)
+  {
+    this.setData({
+      selectFlag: !this.data.selectFlag 
+    })
+  },
+  mySelect:function(e)
+  {
+    let name=e.currentTarget.dataset.name;
+    console.log(name);
+    this.setData({
+      selectContent: name,
+      selectFlag:false
+    })
   }
 })

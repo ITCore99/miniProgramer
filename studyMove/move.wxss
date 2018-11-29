@@ -21,18 +21,19 @@ view{
 {
   border-bottom:2rpx solid#eee;
 }
-.inner{
+/* .inner{
     position: absolute;
     top:0;
-}
+} */
 .content
 {
     width: 750rpx;
     z-index: 998;
     padding: 0 10rpx;
-    transition: left 0.2s ease-in-out;
+    transition: left 0.01s ease-in-out;
     white-space: nowrap;
     overflow: hidden;
+    /*-webkit-overflow-scrolling: touch; */
     text-overflow: ellipsis;
     background: #fff;
     position: absolute;
@@ -70,3 +71,97 @@ view{
     right: 0;
     color: #fff;
 } */
+.footer_container
+{
+  width: 750rpx;
+  display: flex;
+  justify-content: space-between
+}
+.input
+{
+  box-sizing: border-box;
+  flex: 1;
+  height: 90rpx;
+  padding-left:15rpx;
+}
+.btn
+{
+  margin: 0px;
+  height: 90rpx;
+  width: 250rpx;
+}
+.container_block
+{
+  display: flex;
+  flex-wrap:wrap;
+}
+.img_warper
+{
+  width:250rpx;
+  height: 250rpx;
+}
+image
+{
+  width:250rpx;
+  height: 250rpx;
+}
+.select
+{
+  margin-bottom: 200rpx;
+  position: relative;
+}
+.select .wrapper_selector
+{
+  display: flex;
+  height: 80rpx;
+  margin-top:20rpx;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 0 10rpx;
+}
+.wrapper_selector .icon
+{
+  width: 0rpx;
+  height: 0rpx;
+  border-bottom: 24rpx solid transparent;
+  border-left: 24rpx solid transparent;
+  border-right: 24rpx solid transparent;
+  border-top:24rpx solid #e64340;
+  margin-top: 37rpx;
+}
+.select_list
+{
+  background: #eee;
+  position: absolute;
+  width: 100%;
+  top:75rpx;
+  padding:0 10rpx;
+  z-index: 998;
+  margin: 0 auto;
+  overflow: scroll;
+  animation: mySelect 0.5s;
+
+}
+.select_one
+{
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  height: 70rpx;
+  line-height: 70rpx;
+}
+.select_one:active
+{
+  background:#bbb;
+}
+@keyframes mySelect
+{
+  from
+  {
+    height:0rpx;
+  }
+  to
+  {
+    height:210rpx;
+  }
+}

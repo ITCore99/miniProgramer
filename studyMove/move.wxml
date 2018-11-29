@@ -1,8 +1,35 @@
 <view class='container'>
   <scroll-view scroll-y>
-      <view wx:for="{{data}}" wx:for-item="item" wx:key="{{index}}" class='order-item'>
+      <view wx:for="{{data}}" wx:for-item="item" wx:key="{{index}}" class='order-item' catchtap='halderClickPay'>
         <view class='content' bindtouchstart='touchS' bindtouchmove="touchM" bindtouchend='touchE' data-index="{{index}}" style="{{item.txtStyle}}">{{item.content}}</view>
         <view class="remove" data-index="{{index}}" catchtap='HandlerDel'>删除</view>
       </view>
   </scroll-view>
+  <view class='footer_container'>
+      <input  type='number'  placeholder='输入验证码' focus="true" class='input'/>
+      <button type='primary' class="btn" catchtap='handleSend' disabled='{{btnFlag}}'>{{buttonText}}</button>
+  </view>
+  <view style='margin-top:20px'>
+    <button type="primary" bindtap='chooseImage'>点击开始上传图片</button>
+    <view class="question-images" >
+     <view>显示上传的图片</view>
+      <view class="container_block">
+            <view class="img_warper"wx:for="{{images}}"wx:key="{{index}}"wx:for-item="item" >
+                 <image  class="q-image" src="{{item}}" mode="aspectFill" data-index="{{index}}" bindtap='handleImagePreview' ></image>
+            </view>
+      </view>
+    </view>
+  </view>
+  <!--实现微信小程序的下拉按钮-->
+  <view class="select">
+    <view class='wrapper_selector'>
+      <view class="content_selector">{{selectContent}}</view>
+      <view class='icon' bindtap='handeSpread'></view>
+    </view>
+     <view class='select_list' wx:if="{{selectFlag}}" >
+        <view class="select_one" bindtap="mySelect" data-name="重庆分店">重庆分店</view>
+        <view class="select_one" bindtap="mySelect" data-name="东莞南城分店">东莞南城分店</view>
+        <view class="select_one" bindtap="mySelect" data-name="东莞总店">东莞总店</view>
+    </view>
+  </view>
 </view>
