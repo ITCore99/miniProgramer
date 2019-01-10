@@ -1,0 +1,18 @@
+<view class="title">商品属性值联动选择</view>
+<!--options-->
+<view class="commodity_attr_list">
+  <!--每组属性-->
+  <view class="attr_box" wx:for="{{attrValueList}}" wx:for-item="attr" wx:for-index="attrIndex" wx:key="{{attrIndex}}">
+    <!--属性名-->
+    <view class="attr_name">{{attr.attrKey}}</view>
+    <!--属性值-->
+    <view class="attr_value_box">
+      <!--每个属性值-->
+      <view class="attr_value {{value.checked==1 ? 'attr_value_active' : ''}} {{value.checked==2 ? 'attr_value_disabled' : ''}}" wx:for="{{attr.attrValues}}" wx:key="{{valueIndex}}" wx:for-item="value" wx:for-index="valueIndex" data-row="{{attrIndex}}" data-colom="{{valueIndex}}" data-checked="{{value.checked}}" bindtap='{{value.checked==2 ? "" :"selected"}}'>{{value.name}}</view>
+    </view>
+  </view>
+</view>
+<!--button-->
+<view class="weui-btn-area">
+  <button class="weui-btn" type="primary" bindtap="submit">确定</button>
+</view>
