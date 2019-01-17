@@ -1,0 +1,1 @@
+<painter palette="{{data}}" bind:imgOK="onImgOK" bind:imgErr="onImgErr"></painter>
