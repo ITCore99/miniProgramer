@@ -1,0 +1,280 @@
+<!---商品展示区--->
+<import src="../../lib/wxParse/wxParse.wxml"/>
+<scroll-view class="container" style="height: {{winHeight}}rpx" scroll-y="true">
+  <view wx:if="{{!openAttr}}">
+    <swiper class="goodsimgs" indicator-dots="true"  circular="true" interval="3000" duration="1000">
+      <swiper-item wx:for="{{gallery}}" wx:key="{{item.id}}">
+        <image src="{{item.img_url}}" background-size="cover"></image>
+      </swiper-item>
+    </swiper>
+
+    <!--描述区-->
+    <view class="goods-info">
+       <view class="goodsInfoContainer">
+          <view class="font vipPrice">￥{{goods.retail_price}}<text class="font unit">起/人</text><image class="goodsIcon" src="https://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190124/18001158717f12.png"></image></view>
+          <view class="font marketPrice">非会员价¥{{goods.market_price}}</view>
+          <view class=" font goodsName">
+          {{goods.name}}
+          </view>
+          <view class="font tips" wx:if="{{goods.goods_brief}}">{{goods.goods_brief}}</view>
+          <button class="shareContainer" open-type='share' size="mini">
+           <image class="icon" src="https://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190118/170923914974fa.png"></image>
+           <text style="font-size:24rpx;margin-left:10rpx;">分享</text>
+</button>
+         <image src="https://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190124/1803266525d266.png" class="goSpecification"></image> 
+         <view class="brand" wx:if="{{brand.name}}">
+          <navigator url="../brandDetail/brandDetail?id={{brand.id}}">
+            <text>{{brand.name}}</text>
+          </navigator>
+          </view>
+       </view>
+    </view>
+    <!--会员立省区-->
+    <view class="goVIPContainer">
+      <view class="goVIP">
+         <view class="left">
+        <image src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190109/16351049043b80.png" class="img" mode="widthFix"></image>
+        <view class="reducePriceText">会员立省<text style='color:#f00;font-weight:600;'>{{priceDiffere}}</text>元</view>
+      </view>
+      <navigator class="right" url="/pages/ucenter/buyVip/index">
+        <view class='backText'>成为会员</view>
+        <image class="backImg" src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190109/162417414b86cb.png"></image>
+      </navigator>
+      </view>
+    </view>
+    <!-- <view class="section-nav section-attr" bindtap="switchAttrPop" wx:if="{{keyWordsID!=1036017}}">
+      <view class="t">{{goods.category_id !=1036013 ? "请选择" : "请选择舱型"}}</view>
+      <image class="i" src="../../static/images/address_right.png" background-size="cover"></image>
+    </view> -->
+   
+   <!--中间图标区-->
+    <view class="middleIntroduce">
+       <view class="font IntroduceContent">
+        顶级资源，品质保障：舱房、三餐美食、酒水、饮料、演出活动、儿童俱乐部等全包含。
+       </view>
+       <image src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190125/093544131ac0bd.png" class="logo"></image>
+    </view>
+
+    <!--舱型选择区-->
+    <view class="cabinChooseContainer">
+      <view class="font title">舱房选择</view>
+      <view class="cabinCategory">
+          <view class='item' wx:for="{{cabinCategoryData}}" wx:for-item="item" style='background-image:url({{item.url}});background-size:100% 100%;' wx:key="{{index}}">
+            <text class="font name">{{item.title}}</text>
+          </view>
+      </view>
+    </view>  
+
+    <!--形成安排区-->
+    <view class="journeyContainer">
+      <view class="title">
+       <text class="font name">行程安排</text>
+       <text class="font more">查看更多</text>
+      </view>
+      <view class="main">
+        <view class="innerContainer" id="journey" style="height:{{ElementHeight.journey.value}}px;">
+          <view class="firstSpecial">
+            <view class="font dayName">D1</view>
+            <image class="journeyIcon {{transform}}" src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190125/11561385842a90.png"></image>
+            <view class="desc">抵达天津国际游轮母港，办理值船手续</view>
+          </view>
+          <view wx:for="{{journeyData}}" wx:for-item="item" wx:key="{{index}}">
+            <view class="item">
+                 <view class="font dayName">{{item.dayName}}</view>
+                 <view class="journeyIconContainer">
+                    <view class="stick"></view>
+                    <image class="journeyIcon" src="{{item.url}}"></image>
+                 </view>
+                 <view class="desc">{{item.desc}}</view>
+            </view>
+          </view>
+           <image class="changeIcon {{ElementHeight.journey.state ? '' : 'changeIconed'}}" src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190125/1330328266933f.png" bindtap='changHeight'  data-index="journey"></image>
+        </view>
+      </view>
+    </view>
+    
+
+    <!--舱房设施区-->
+    <view class="equipment">
+         <view class="font title">舱房设施</view>
+         <view class="main">
+        <view class="innerContainer equipmentInnerContainer" id="equipment" style="height:{{ElementHeight.equipment.value}}px;">
+            <view class="equipmentItem" wx:for="{{13}}" wx:key="{{index}}" wx:for-item="item">
+              <image class="equipIcon" src="https://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190125/155253378fc5d1.png"></image>
+              <text class="font equipTitle">独立卫生间</text>
+            </view>
+          <image class="changeIcon {{ElementHeight.equipment.state ? '' : 'changeIconed'}}" src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190125/1330328266933f.png" bindtap='changHeight' data-index="equipment"></image>
+        </view>
+      </view>
+    </view>
+
+
+    <!--游轮美食区-->
+    <view class="cate" style='background:#fff;margin-top:10rpx;'>
+         <view class="font title" style="padding-left:20rpx; border-bottom: 2rpx solid rgba(182, 182, 182, 0.5);color:#353535;line-height:82rpx;">游轮美食</view>
+         <view class="main">
+        <view class="innerContainer" id="journey" style="height:{{ElementHeight}}px;">
+          <image class="changeIcon" src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190125/1330328266933f.png" bindtap=''></image>
+        </view>
+      </view>
+    </view>
+
+     <!--娱乐活动区-->
+    <view class="entertainment" style='background:#fff;margin-top:10rpx;'>
+         <view class="font title" style="padding-left:20rpx; border-bottom: 2rpx solid rgba(182, 182, 182, 0.5);color:#353535;line-height:82rpx;">娱乐活动</view>
+         <view class="main">
+        <view class="innerContainer" id="journey" style="height:{{ElementHeight}}px;">
+          <image class="changeIcon" src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190125/1330328266933f.png" bindtap=''></image>
+        </view>
+      </view>
+    </view>
+
+
+    <!--预定须知区-->
+    <view class="reserve">
+         <view class="font title">预定须知</view>
+         <view class="main">
+        <view class="innerContainer innerContainerReserve" id="reserve" style="height:{{ElementHeight.reserve.value}}px;">
+          <text class=" font reserveItem" wx:for="{{reserveData}}" wx:for-item="item" wx:key="{{index}}">{{index+1}}、{{item.content}}</text>
+          <image class="changeIcon {{ElementHeight.reserve.state ? '' : 'changeIconed'}}" src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190125/1330328266933f.png" bindtap='changHeight'  data-index="reserve"></image>
+        </view>
+      </view>
+    </view>
+
+    <!--费用说明区-->
+    <view class="feesDescription">
+         <view class="font title">费用说明</view>
+         <view class="main">
+        <view class="innerContainer feesDesInnerContainer" id="feesDescription" style="height:{{ElementHeight.feesDescription.value}}px;">
+          <view class="feesDescriptionItem" wx:for="{{feesData}}" wx:for-item="item" wx:key="{{index}}">
+            <view class="font feesTitle">{{item.title}}</view>
+            <text class="font feesContent" wx:for="{{item.list}}" wx:for-item="temp" wx:key="{{index}}">{{temp.content}}</text>
+          </view>
+          <image class="changeIcon {{ElementHeight.feesDescription.state ? '' : 'changeIconed'}}" src="http://hldfiles.oss-cn-qingdao.aliyuncs.com/selectholiday/upload/20190125/1330328266933f.png" bindtap='changHeight' data-index="feesDescription"></image>
+        </view>
+      </view>
+    </view>
+   
+   <!--评论区-->
+    <view class="comments" wx:if="{{comment.count > 0}}">
+      <view class="h">
+        <navigator url="../comment/comment?valueId={{goods.id}}&typeId=0">
+          <text class="t">评价({{comment.count > 999 ? '999+' : comment.count}})</text>
+          <text class="i">查看全部</text>
+        </navigator>
+      </view>
+      <view class="b">
+        <view class="item">
+          <view class="info">
+            <view class="user">
+              <image src="{{comment.data.avatar}}"></image>
+              <text>{{comment.data.nickname}}</text>
+            </view>
+            <view class="time">{{comment.data.add_time}}</view>
+          </view>
+          <view class="content">
+            {{comment.data.content}}
+          </view>
+          <view class="imgs" wx:if="{{comment.data.pic_list.length > 0}}">
+            <image class="img" wx:for="{{comment.data.pic_list}}" wx:key="{{item.id}}" src="{{item.pic_url}}"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!--商品参数去---> 
+    <view class="goods-attr" wx:if="{{attribute.length}}">
+      <view class="t">商品参数</view>
+      <view class="l">
+        <view class="item" wx:for="{{attribute}}" wx:key="{{item.name}}">
+          <text class="left">{{item.name}}</text>
+          <text class="right">{{item.value}}</text>
+        </view>
+      </view>
+    </view>
+
+
+   <!--预定须知-->
+    <!-- <view class="goodsDesc">
+      <view class='userAgreement'>{{goods.category_id !=1036017 ? "订购须知" : "活动简介"}}</view> 
+      <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
+    </view> -->
+
+    <!--大家都在看-->
+    <!-- <view class="related-goods" wx:if="{{relatedGoods.length > 0}}">
+      <view class="h">
+        <view class="line"></view>
+        <text class="title">大家都在看</text>
+      </view>
+      <view class="b">
+        <view class="item" wx:for="{{relatedGoods}}" wx:key="{{item.id}}">
+          <navigator url="/pages/goods/goods?id={{item.id}}">
+            <image class="img" src="{{item.list_pic_url}}" background-size="cover"></image>
+            <text class="name">{{item.name}}</text>
+            <text class="price">￥{{item.retail_price}}</text>
+          </navigator>
+        </view>
+      </view>
+    </view> -->
+
+  </view>
+
+  <view wx:if="{{openAttr}}" class="attr-pop">
+    <view class="img-info">
+      <image class="img" src="{{goods.list_pic_url}}"></image>
+      <view class="info">
+        <view class="c">
+          <view class="p">会员价：￥{{displayPrice}}</view>
+          <view class="p" style='font-weight:400;font-size:26rpx;'>市场价：￥{{displayPriceMarket}}</view>
+          <view class="a">已选择：{{checkedSpecText}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!--规格区-->
+    <view class="spec-con">
+      <view class="spec-item {{item.specification_id==1 ? 'displayNone' : ''}}" wx:for="{{specificationList}}" wx:key="{{item.specification_id}}">
+        <view class="name">{{item.name}}</view>
+        <view class="values">
+          <view class="vlaueContainer"  wx:for="{{item.valueList}}" wx:for-item="vitem" wx:key="{{vitem.id}}" data-index="{{index}}">
+              <view  class="value {{vitem.checked ? 'selected' : ''}} {{vitem.iconUrl ? 'tradition' : 'modern'}}"  bindtap="clickSkuValue"  data-value-id="{{vitem.id}}" data-name-id="{{vitem.specification_id}}">{{vitem.value}}
+            </view>
+             <image class="catergoryIcon" src="{{vitem.iconUrl}}"></image>
+          </view>
+
+          <!-- <view wx:if="{{item.specification_id==2}}" wx:for="{{item.valueList}}" wx:for-item="vitem" wx:key="{{index}}" data-index="{{index}}" >
+            <view>{{vitem.name}}</view> 
+            <view  class="value {{temp.checked ? 'selected' : ''}}" bindtap="clickSkuValue2" wx:for="{{vitem.value}}" wx:for-item="temp"  wx:key="{{temp.id}}" data-index="{{index}}" data-value-id="{{temp.id}}" data-name-id="{{temp.specification_id}}" >{{temp.value}}</view> 
+          </view> -->
+        </view>
+      </view>
+      
+       <!--计数器-->
+      <view class="number-item">
+        <view class="name">数量</view>
+        <view class="selnum">
+          <view class="cut" bindtap="cutNumber">-</view>
+          <input value="{{number}}" class="number" disabled="true" type="number" />
+          <view class="add" bindtap="addNumber">+</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="bottom-btn" wx:if="{{goods.category_id  != 1036017}}">
+  <view class="l l-collect {{ openAttr ? 'back' : ''}}" bindtap="closeAttrOrCollect">
+    <image class="icon" src="{{ collectBackImage }}"></image>
+  </view>
+  <view class="l l-cart">
+    <view class="box">
+      <text class="cart-count">{{cartGoodsCount}}</text>
+      <image bindtap="openCartPage" class="icon" src="/static/images/ic_menu_shoping_nor.png"></image>
+
+    </view>
+  </view>
+  <view class="r" bindtap="addToCart" wx:if="{{goods.category_id==1036015}}">加入购物车</view>
+  <view class="c" bindtap='buyGoods'>立即购买</view>
+</view>
+<view class='join' wx:else  bindtap='buyGoods'>我要报名</view> 
+<!-- <goHome bind:success="handClickGoHome" id="goHome" wx:if="{{goHomeFlage}}"></goHome> -->
