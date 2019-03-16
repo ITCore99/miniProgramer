@@ -1,0 +1,50 @@
+page{
+  background-color:#eee;
+}
+.containers .header
+{
+  display: flex;
+  justify-content: space-between;
+  border:1px solid #333;
+}
+.containers .weekHeader
+{
+  display: flex;
+  border:1px solid #111;
+}
+.containers .weekHeader .WeekItem
+{
+  width: calc(750rpx / 7);
+  height: 50rpx;
+  text-align: center;
+  line-height:50rpx;
+  
+}
+
+.main
+{
+  display: flex;
+  flex-wrap: wrap;
+}
+.main .mainItem 
+{
+  display: flex;
+  flex-direction: column;
+  width:calc(750rpx / 7);
+  box-sizing:border-box;
+  border:1rpx solid transparent;
+  text-align: center;
+}
+.main .mainItem.display-none
+{
+  color:transparent;
+  border-color: transparent
+}
+.main .mainItem.unable
+{
+  opacity: 0.5;
+}
+.hide
+{
+  color:transparent;
+}

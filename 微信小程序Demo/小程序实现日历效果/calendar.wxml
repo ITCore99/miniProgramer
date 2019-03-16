@@ -1,0 +1,16 @@
+<view class="containers">
+ <view class="header">
+  <view bindtap="{{isShow ? 'changeMonth' : 'hide'}}" data-flag="0" class="{{isShow ? '' : 'hide'}}">《</view>
+  <view>{{year}}-{{month <10 ? '0'+month : month }}</view>
+  <view data-flag="1" bindtap="changeMonth">》</view>
+ </view>
+ <view class="weekHeader">
+  <view class="WeekItem" wx:for="{{weekArrs}}" wx:key="{{index}}" wx:for-item="item">{{item}}</view>
+ </view>
+ <view class="main">
+   <view class="mainItem {{item.day <=0 ? 'display-none' : ''}} {{item.available ? '' : 'unable'}}" wx:for="{{dateArr}}" wx:key="{{index}}" wx:for-item="item" data-year="{{year}}" data-month="{{month}}" data-day="{{item.day}}" bindtap="{{item.available ? 'clickItem' : ''}}">
+     <view class="date" >{{item.day}}</view>
+      <view class="price">{{item.amount}}</view>
+   </view>
+ </view>
+</view>
